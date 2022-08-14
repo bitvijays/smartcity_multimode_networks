@@ -96,8 +96,13 @@ class multi_network_management():
         log.info("Allocated MFE:")
         for i in self.list_allocations:
             list_alloc.append(i.to_string())
+
+        print("\n")            
         log.info("MFEA Message:")
-        log.info(list_alloc)
+#        log.info(list_alloc)
+
+        for j in list_alloc:
+            log.info(j)
         return list_alloc
 
     def add_msgflow(self, msgflow):
@@ -353,7 +358,9 @@ class multi_network_management():
 
     def print_unallocated_elements(self):
         """ Print Unallocated MFE """
-        log.info("\nUn-allocated MFE:")
+
+        print("\n")
+        log.info("Un-allocated MFE:")
         for mfe in self.list_unallocated_elements:
             log.info(mfe.to_string())
 
@@ -417,7 +424,8 @@ class multi_network_management():
         return None
 
     def print_all_networkbins(self):
-        log.info("\nCurrent Network Bins are")
+        print("\n")
+        log.info("Current Network Bins are")
         for item in self.list_bins:
             name = item.get_id()
             bandwidth = item.get_network().get_bandwidth()
