@@ -23,6 +23,10 @@ class Network:
         """ Return the bandwidth of the network interface """
         return self.bandwidth
 
+    def get_payload_size(self):
+        """ Return the max payload size of the network"""
+        return self.max_payload
+
     def get_name(self):
         """ Return the name of the network interface """
         return self.name

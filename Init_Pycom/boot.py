@@ -384,36 +384,44 @@ def post_var(msg, medium, msgflow_name):
     return False
 
 def define_msgflows():
-    """ A function to define the Message Flows """
+    """ A function to define the Message Flows with MessageFlow(name, crit_level, payload, period) arguments """
 
 #    MUL_CRIT_0 = 100000
 #    MUL_CRIT_1 = 5000
     MUL_CRIT_0 = 1
     MUL_CRIT_1 = 1
 
+    # MSG_FLOW Fall Detection with 3 criticality level 0, 1, 2 with payload size 1000, 40, 10 and payload interval 10, 20, 60 respectively.
     falld = MessageFlow("Fall Detection", 0, 1000 * MUL_CRIT_0, 10)
     falld.set_crit_level(1, 40 * MUL_CRIT_1, 20)
     falld.set_crit_level(2, 10, 60)
 
+    # MSG_FLOW Heart Monitoring with 3 criticality level 0, 1, 2 with payload size 1000, 80 , 10 and payload interval 5, 10, 20 respectively.
     healthm = MessageFlow("Heart Monitoring", 0, 1000 * MUL_CRIT_0, 5)
     healthm.set_crit_level(1, 80 * MUL_CRIT_1, 10)
     healthm.set_crit_level(2, 10, 20)
 
+    # MSG_FLOW Body Temperature with 2 criticality level 0, 1 with payload size 30, 10 and payload interval 30, 120 respectively.
     bodyt = MessageFlow("Body Temperature", 0, 30 * MUL_CRIT_0, 30)
     bodyt.set_crit_level(1, 10 * MUL_CRIT_1, 120)
 
+    # MSG_FLOW Bedroom Sensor with 2 criticality level 0, 1 with payload size 40000, 10 and payload interval 10, 30 respectively.
     bedsens = MessageFlow("Bedroom Sensor", 0, 40000 * MUL_CRIT_0, 10)
     bedsens.set_crit_level(1, 10 * MUL_CRIT_1, 30)
 
+    # MSG_FLOW Bathroom Sensor with 2 criticality level 0, 1 with payload size 80, 10 and payload interval 10, 30 respectively.
     bathsens = MessageFlow("Bathroom Sensor", 0, 80 * MUL_CRIT_0, 10)
     bathsens.set_crit_level(1, 10 * MUL_CRIT_1, 30)
 
+    # MSG_FLOW Kitchen Sensor with 2 criticality level 0, 1 with payload size 40000, 10 and payload interval 10, 30 respectively.
     kitsens = MessageFlow("Kitchen Sensor", 0, 40000 * MUL_CRIT_0, 10)
     kitsens.set_crit_level(1, 10 * MUL_CRIT_1, 30)
 
+    # MSG_FLOW Front Door with 2 criticality level 0, 1 with payload size 40000, 10 and payload interval 10, 30 respectively.
     frontsens = MessageFlow("Front Door Sensor", 0, 40000 * MUL_CRIT_0, 10)
     frontsens.set_crit_level(1, 10 * MUL_CRIT_1, 30)
 
+    # MSG_FLOW Energy Usage with 1 criticality level 0 with payload size 40 and payload interval 3600 respectively.
     enermon = MessageFlow("Energy Usage", 0, 40 * MUL_CRIT_0, 3600)
 
 ## Defining Network Interface mnm is multi network management object and defined globally as of now ##
@@ -431,8 +439,8 @@ def define_networks():
     """ Define the Networks """
 
     enable_wlan = False
-    enable_lora = False
-    enable_sigfox = True
+    enable_lora = True
+    enable_sigfox = False
     enable_nbiot = False
     lora_sf = 7
     lora_lb = 0

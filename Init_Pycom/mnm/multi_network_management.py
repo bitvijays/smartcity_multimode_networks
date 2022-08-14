@@ -291,8 +291,10 @@ class multi_network_management():
 
         # Get the largest bin capacity
         bin_capacity = self.get_largest_bin().get_capacity()
+        bin_payload_size = self.get_largest_bin().get_payload_size()
+        
         # Check if the elements fits into the Network bin
-        if not element.fits_into(bin_capacity):
+        if not element.fits_into(bin_capacity, bin_payload_size):
             log.debug("Element %s doesn't fit in to Network Bin %s", element.get_id(), self.get_largest_bin().get_id())
             # Check if the element is present in list_unallocated_elements; If present don't add
             if not self.is_in_list_unallocated(element):
@@ -314,24 +316,24 @@ class multi_network_management():
                 # Worst Fit
                 if self.worst:
                     # Current Free space is the largest and elements fits the bin
-                    if element.fits_into(current_free_space) and current_free_space.compare_to(largest_space) > 0:
+                    if element.fits_into(current_free_space, bin_payload_size) and current_free_space.compare_to(largest_space) > 0:
                         largest_space = current_free_space
                         matching_bin = current_bin
                 # Best Fit
                 elif self.best:
-                    if element.fits_into(current_free_space) and current_free_space.compare_to(lowest_space) <= 0:
+                    if element.fits_into(current_free_space, bin_payload_size) and current_free_space.compare_to(lowest_space) <= 0:
                         lowest_space = current_free_space
                         matching_bin = current_bin
                 # First Fit
                 elif self.first:
-                    if matching_bin is None and element.fits_into(current_free_space):
+                    if matching_bin is None and element.fits_into(current_free_space, bin_payload_size):
                         matching_bin = current_bin
                 else:
-                    if element.fits_into(current_free_space):
+                    if element.fits_into(current_free_space, bin_payload_size):
                         matching_bin = current_bin
 
             # Element doesn't fit into any bin
-            if ((matching_bin is None) or not element.fits_into(DoubleValueSize(matching_bin.get_free_space()))):
+            if ((matching_bin is None) or not element.fits_into( DoubleValueSize(matching_bin.get_free_space()), bin_payload_size)):
                 if not self.is_in_list_unallocated(element):
 #                    self.list_unallocated_elements.append(copy.copy(element))
                     self.list_unallocated_elements.append(element)

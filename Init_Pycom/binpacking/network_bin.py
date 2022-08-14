@@ -25,9 +25,10 @@ class NetworkBin:
             print(error_msg)
             raise DuplicateElementException(error_msg)
         current_bin_free_space = self.get_free_space()
+        current_bin_payload_size = self.get_payload_size()
 
         # Check if the Network Bin has enough free space for the element
-        if element.fits_into(DoubleValueSize(current_bin_free_space)) is None:
+        if element.fits_into(DoubleValueSize(current_bin_free_space), current_bin_payload_size) is None:
             error_msg = "Network Bin " + str(self.get_id()) + " is full. Can't add the element " + str(element.get_id())
             raise BinFullException(error_msg)
         else:
@@ -48,6 +49,10 @@ class NetworkBin:
     def get_capacity(self):
         """ Get the current capacity of the network bin """
         return DoubleValueSize(self.network.get_bandwidth())
+
+    def get_payload_size(self):
+        """Get the current payload size of the network bin"""
+        return DoubleValueSize(self.network.get_payload_size())
 
     def get_element_count(self):
         """ Return the number of elements (msgflow) assigned to the network """

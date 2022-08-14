@@ -16,9 +16,9 @@ class MessageFlowElement:
         """ Return the msgflow """
         return self.msgflow
 
-    def fits_into(self, arg):
+    def fits_into(self, network_bandwidth_size, network_payload_size):
         """ Return True if the Msgflow element fits into the Bin?? """
-        if self.get_size().compare_to(arg) <= 0:
+        if (self.get_size().compare_to(network_bandwidth_size) <= 0) and (self.get_payload_size().compare_to(network_payload_size) <= 0):
             return True
         return False
 
@@ -31,6 +31,11 @@ class MessageFlowElement:
         mfe_bandwidth_utilisation = self.msgflow.get_bandwidth_utilisation(self.allocated_crit_level)
         return DoubleValueSize(mfe_bandwidth_utilisation)
 
+    def get_payload_size(self):
+        """ Return the payload size of the MsgFlow """
+        mfe_payload_size = self.msgflow.get_payload(self.allocated_crit_level)
+        return DoubleValueSize(mfe_payload_size)
+
     def get_allocated_crit_level(self):
         """ Return the allocated criticality level """
         return self.allocated_crit_level
@@ -41,4 +46,4 @@ class MessageFlowElement:
 
     def to_string(self):
         """ ???? """
-        return self.msgflow.get_name() + " with criticality level " + str(self.allocated_crit_level) + " with Bandwidth Utilisation of " + str(self.get_size().get_value())
+        return self.msgflow.get_name() + " with criticality level " + str(self.allocated_crit_level) + " with Bandwidth Utilisation of " + str(self.get_size().get_value()) + " and PS: " + str(self.get_payload_size().get_value())
