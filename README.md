@@ -1,5 +1,7 @@
 # smartcity_multimode_networks
 
+## Different message formats details
+
 The FiPY generates the MFEA (Message Flow Element Allocation) message (a list of dict)
 
 ```json
@@ -66,3 +68,10 @@ The RPI creates a stats dictionary to store how many messages has been sent, ack
 ```
 
 On the cloud, the cloud gets the data via HTTP POST, Lora/ Sigfox callbacks and store it into a file.
+
+
+## How to run
+
+`boot.py` in `Init_Pycom` is the main file that executes the multi-network ILP algorithim. The main function calls the `check_allocation` functions. `Check_allocations` function calls the `define_msgflows` function. `define_msgflows` function defines the message flow as defined in the paper. The function `define_msgflows_csv` read the message flows from the CSV file.
+
+The `check_allocation` function then calls the `define_networks` function. As we are simulating the networks, the bandwidth of the different networks can be defined.
