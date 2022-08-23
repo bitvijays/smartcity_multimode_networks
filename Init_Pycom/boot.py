@@ -435,6 +435,22 @@ def define_msgflows():
     mnm.add_msgflow(frontsens)
     mnm.add_msgflow(enermon)
 
+def define_msgflows_csv():
+    """Read msgflows from CSV file"""
+    csvdata = []
+    delim = ','
+    with open("MsgFlows.csv", 'r') as file:
+    # Skip line with header
+        next(file)
+        for row in file:
+            csvdata.append(row.rstrip('\n').rstrip('\r').split(delim))
+  
+    for i in csvdata:
+
+        # MsgFlow =  MessageFlow("Energy Usage", Criticality_Levek, Payload_Size, Payload_Interval)
+        temp_msgflow = MessageFlow(i[0], int(i[1]), int(i[2]), int(i[3]))
+        mnm.add_msgflow(temp_msgflow)
+
 def define_networks():
     """ Define the Networks """
 
@@ -515,9 +531,10 @@ def define_networks():
 
 def check_allocations():
     """ Setting up the message flows and the networks """
+    define_msgflows_csv()
 
     # Define the msgflows
-    define_msgflows()
+#    define_msgflows()
     # Define the Networks
     define_networks()
 
